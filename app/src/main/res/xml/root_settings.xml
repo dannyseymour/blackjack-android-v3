@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.Preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+  <PreferenceCategory android:title="Deck Rules">
+    <SeekBarPreference
+      android:defaultValue="@integer/decks_in_shoe_def"
+      android:key="@string/decks_per_shoe_key"
+      android:max="@integer/decks_in_shoe_max"
+      android:summary="The number of decks of cards in the dealer's shoe"
+      android:title="Decks Per Shoe"
+      app:min="@integer/decks_in_shoe_min"
+      app:showSeekBarValue="true"/>
+  </PreferenceCategory>
+
+  <androidx.Preference.PreferenceCategory app:title="Dealer Rules">
+    <androidx.Preference.SwitchPreferenceCompat
+      app:key="rule_soft_17"
+      app:title="Dealer Stands on Soft 17"
+      android:summary="The dealer will not hit on a soft 17."/>
+    <androidx.Preference.SwitchPreferenceCompat
+      app:key="no_hold_card"
+      app:title="Dealer Uses No Hold Card"
+      android:summary="The dealer does not examine its hold card."/>
+  </androidx.Preference.PreferenceCategory>
+</androidx.Preference.PreferenceScreen>

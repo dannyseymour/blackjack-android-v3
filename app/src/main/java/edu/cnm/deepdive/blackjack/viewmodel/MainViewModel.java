@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.blackjack.viewmodel;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.Transformations;
 import edu.cnm.deepdive.blackjack.controller.fsm.RoundState;
+import edu.cnm.deepdive.blackjack.controller.fsm.RoundState.RuleVariation;
 import edu.cnm.deepdive.blackjack.model.entity.Card;
 import edu.cnm.deepdive.blackjack.model.entity.Hand;
 import edu.cnm.deepdive.blackjack.model.entity.Round;
@@ -29,7 +31,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainViewModel extends AndroidViewModel implements LifecycleObserver {
+public class MainViewModel extends AndroidViewModel implements LifecycleObserver
 
   private static final int DEFAULT_DECKS_IN_SHOE = 6;
 
@@ -39,6 +41,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   private EnumSet<RoundState.RuleVariation> variations;
   private CompositeDisposable pending = new CompositeDisposable();
   private int decksPerShoe;
+
 
   private MutableLiveData<Long> roundId;
   private LiveData<Round> round;
@@ -76,6 +79,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
     // Change the lines below if any rule variations are employed.
     variations = EnumSet.noneOf(RoundState.RuleVariation.class);
     decksPerShoe = DEFAULT_DECKS_IN_SHOE;
+    variations = EnumSet.noneOf(RuleVariation.class);
   }
 
   private void setupBaseLiveData() {
@@ -193,6 +197,15 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
       }
     });
   }
+  public void newGame(int numDecks, EnumSet<RuleVariation> variations){
+    this.decksPerShoe = numDecks;
+    this.variations.clear();
+    this.variations.addAll(variations);
+
+    shoeId = 0;
+    startRound();
+
+  }
 
   private void hitDealer() {
     executor.submit(() -> {
@@ -232,14 +245,6 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
     );
   }
 
-  private static class PairOfHandsLiveData extends
-      MediatorLiveData<Pair<HandWithCards, HandWithCards>> {
 
-    private PairOfHandsLiveData(LiveData<HandWithCards> dealer, LiveData<HandWithCards> player) {
-      addSource(dealer, (hand) -> setValue(Pair.create(hand, player.getValue())));
-      addSource(player, (hand) -> setValue(Pair.create(dealer.getValue(), hand)));
-    }
-
-  }
 
 }
