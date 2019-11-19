@@ -85,9 +85,9 @@ public enum RoundState {
   public static boolean dealerCanHit(HandWithCards dealer, EnumSet<RuleVariation> variations) {
     return dealer.isDealer()
         && (dealer.getSoftValue() < 17
-            || (dealer.isSoft()
-                && dealer.getSoftValue() == 17
-                && !variations.contains(RuleVariation.STAND_ON_SOFT_17)));
+        || (dealer.isSoft()
+        && dealer.getSoftValue() == 17
+        && !variations.contains(RuleVariation.STAND_ON_SOFT_17)));
   }
 
   public RoundState getNextState(HandWithCards dealer, HandWithCards player,

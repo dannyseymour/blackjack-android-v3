@@ -23,7 +23,7 @@ import edu.cnm.deepdive.blackjack.viewmodel.MainViewModel;
 import java.util.EnumSet;
 
 public class MainActivity extends AppCompatActivity
-    implements SharedPreferences.OnSharedPreferenceChangeListener{
+    implements SharedPreferences.OnSharedPreferenceChangeListener {
 
   private MainViewModel viewModel;
   private SharedPreferences preferences;
@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_settings);
     getSupportFragmentManager()
-      .beginTransaction()
-      .replace(R.id.settings, new SettingsFragment())
-      .commit();
+        .beginTransaction()
+        .replace(R.id.settings, new SettingsFragment())
+        .commit();
     viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
     getLifecycle().addObserver(viewModel);
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -53,27 +53,30 @@ public class MainActivity extends AppCompatActivity
     viewModel.newGame(numDecks, variations);
 
   }
-  private void readSettings(){
+
+  private void readSettings() {
     Resources res = getResources();
     numDecks = preferences.getInt(getString(R.string.decks_per_shoe_key),
         res.getInteger(R.integer.decks_per_shoe_default));
-    boolean noHoleCardVariation = preferences.getBoolean(getString(R.string.rule_no_hold_card), false);
-    boolean standOnSoft17Variation = preferences.getBoolean(getString(R.string.rule_soft_17),false);
-    if (noHoleCardVariation){
+    boolean noHoleCardVariation = preferences
+        .getBoolean(getString(R.string.rule_no_hold_card), false);
+    boolean standOnSoft17Variation = preferences
+        .getBoolean(getString(R.string.rule_soft_17), false);
+    if (noHoleCardVariation) {
       variations.add(RuleVariation.NO_HOLE_CARD);
     }
-    if (standOnSoft17Variation){
+    if (standOnSoft17Variation) {
       variations.add(RuleVariation.STAND_ON_SOFT_17);
     }
   }
 
-  private void readDefaults(){
+  private void readDefaults() {
     Resources res = getResources();
     numDecks = res.getInteger(R.integer.decks_in_shoe_def);
 
   }
 
-  public static class SettingsFragment extends PreferenceFragmentCompat{
+  public static class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

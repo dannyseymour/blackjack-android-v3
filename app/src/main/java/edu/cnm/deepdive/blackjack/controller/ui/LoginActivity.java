@@ -30,10 +30,10 @@ public class LoginActivity extends AppCompatActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     if (requestCode == LOGIN_REQUEST_CODE) {
-     service.completeSignIn(data)
-        .addOnSuccessListener((account) -> switchToMain())
-        .addOnFailureListener((ex) ->
-            Toast.makeText(this, R.string.login_failure_message, Toast.LENGTH_LONG).show());
+      service.completeSignIn(data)
+          .addOnSuccessListener((account) -> switchToMain())
+          .addOnFailureListener((ex) ->
+              Toast.makeText(this, R.string.login_failure_message, Toast.LENGTH_LONG).show());
     } else {
       super.onActivityResult(requestCode, resultCode, data);
     }

@@ -11,7 +11,8 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <activity android:name=".controller.fsm.SettingsActivity">
-      <android:parentActivityName =
+      <android:parentActivityName
+      =
     </activity>
     <activity android:name=".controller.ui.LoginActivity">
       <intent-filter>
